@@ -1,0 +1,6 @@
+﻿{
+
+  "ConnectionStrings": {
+    "MSPetShop4": "Server=petshop-db,1433;Database=MSPetShop4;User Id=sa;Password=dock3r-n3tfx;"
+  }
+}

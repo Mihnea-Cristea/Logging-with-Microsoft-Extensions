@@ -1,0 +1,13 @@
+# LogMonitor - https://github.com/microsoft/windows-container-tools/tree/master/LogMonitor
+FROM mcr.microsoft.com/windows/nanoserver:1809 AS logmonitor
+ARG LOGMONITOR_VERSION="v1.1"
+ADD https://github.com/microsoft/windows-container-tools/releases/download/${LOGMONITOR_VERSION}/LogMonitor.exe .
+
+# app
+FROM psdockernetfx/petshop-api:m2
+
+COPY --from=logmonitor /LogMonitor.exe /LogMonitor.exe
+COPY LogMonitorConfig-with-IIS.json /LogMonitor/LogMonitorConfig.json
+
+# LogMonitor starts ServiceMonitor, which starts IIS
+ENTRYPOINT /LogMonitor.exe /ServiceMonitor.exe w3svc
